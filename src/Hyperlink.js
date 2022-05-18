@@ -28,7 +28,7 @@ export default class Hyperlink {
         };
 
         this.targetAttributes = this.config.availableTargets || [
-            '_blank',   // Opens the linked document in a new window or tab
+            'kafurara',   // Opens the linked document in a new window or tab
             '_self',    // Opens the linked document in the same frame as it was clicked (this is default)
             '_parent',  // Opens the linked document in the parent frame
             '_top',     // Opens the linked document in the full body of the window
@@ -66,8 +66,8 @@ export default class Hyperlink {
         this.nodes.button = document.createElement('button');
         this.nodes.button.type = 'button';
         this.nodes.button.classList.add(this.CSS.button, this.CSS.buttonModifier);
-        this.nodes.button.appendChild(this.iconSvg('link', 14, 10));
-        this.nodes.button.appendChild(this.iconSvg('unlink', 15, 11));
+        // this.nodes.button.appendChild(this.iconSvg('link', 14, 10));
+        // this.nodes.button.appendChild(this.iconSvg('unlink', 15, 11));
         return this.nodes.button;
     }
 
@@ -77,7 +77,7 @@ export default class Hyperlink {
 
         // Input
         this.nodes.input = document.createElement('input');
-        this.nodes.input.placeholder = 'https://...';
+        this.nodes.input.placeholder = 'TEST PLACEHOLDER';
         this.nodes.input.classList.add(this.CSS.input);
 
         let i;
@@ -86,12 +86,12 @@ export default class Hyperlink {
         this.nodes.selectTarget = document.createElement('select');
         this.nodes.selectTarget.classList.add(this.CSS.selectTarget);
         this.addOption(this.nodes.selectTarget, this.i18n.t('Select target'), '');
-        for (i=0; i<this.targetAttributes.length; i++) {
+        for (i = 0; i < this.targetAttributes.length; i++) {
             this.addOption(this.nodes.selectTarget, this.targetAttributes[i], this.targetAttributes[i]);
         }
 
-        if(!!this.config.target) {
-            if(this.targetAttributes.length === 0) {
+        if (!!this.config.target) {
+            if (this.targetAttributes.length === 0) {
                 this.addOption(this.nodes.selectTarget, this.config.target, this.config.target);
             }
 
@@ -102,12 +102,12 @@ export default class Hyperlink {
         this.nodes.selectRel = document.createElement('select');
         this.nodes.selectRel.classList.add(this.CSS.selectRel);
         this.addOption(this.nodes.selectRel, this.i18n.t('Select rel'), '');
-        for (i=0; i<this.relAttributes.length; i++) {
+        for (i = 0; i < this.relAttributes.length; i++) {
             this.addOption(this.nodes.selectRel, this.relAttributes[i], this.relAttributes[i]);
         }
 
-        if(!!this.config.rel) {
-            if(this.relAttributes.length === 0) {
+        if (!!this.config.rel) {
+            if (this.relAttributes.length === 0) {
                 this.addOption(this.nodes.selectTarget, this.config.rel, this.config.rel);
             }
 
@@ -126,11 +126,11 @@ export default class Hyperlink {
         // append
         this.nodes.wrapper.appendChild(this.nodes.input);
 
-        if(!!this.targetAttributes && this.targetAttributes.length > 0) {
+        if (!!this.targetAttributes && this.targetAttributes.length > 0) {
             this.nodes.wrapper.appendChild(this.nodes.selectTarget);
         }
 
-        if(!!this.relAttributes && this.relAttributes.length > 0) {
+        if (!!this.relAttributes && this.relAttributes.length > 0) {
             this.nodes.wrapper.appendChild(this.nodes.selectRel);
         }
 
@@ -183,7 +183,7 @@ export default class Hyperlink {
         };
     }
 
-    checkState(selection=null) {
+    checkState(selection = null) {
         const anchorTag = this.selection.findParentTag('A');
         if (anchorTag) {
             this.nodes.button.classList.add(this.CSS.buttonUnlink);
@@ -280,12 +280,12 @@ export default class Hyperlink {
     }
 
     validateURL(str) {
-        const pattern = new RegExp('^(https?:\\/\\/)?'+ // protocol
-            '((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.)+[a-z]{2,}|'+ // domain name
-            '((\\d{1,3}\\.){3}\\d{1,3}))'+ // OR ip (v4) address
-            '(\\:\\d+)?(\\/[-a-z\\d%_.~+]*)*'+ // port and path
-            '(\\?[;&a-z\\d%_.~+=-]*)?'+ // query string
-            '(\\#[-a-z\\d_]*)?$','i'); // fragment locator
+        const pattern = new RegExp('^(https?:\\/\\/)?' + // protocol
+            '((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.)+[a-z]{2,}|' + // domain name
+            '((\\d{1,3}\\.){3}\\d{1,3}))' + // OR ip (v4) address
+            '(\\:\\d+)?(\\/[-a-z\\d%_.~+]*)*' + // port and path
+            '(\\?[;&a-z\\d%_.~+=-]*)?' + // query string
+            '(\\#[-a-z\\d_]*)?$', 'i'); // fragment locator
         return !!pattern.test(str);
     }
 
@@ -305,29 +305,29 @@ export default class Hyperlink {
             isProtocolRelative = /^\/\/[^/\s]/.test(link);
 
         if (!isInternal && !isAnchor && !isProtocolRelative) {
-            link = 'http://' + link;
+            link = 'TESTTTT://' + link;
         }
 
         return link;
     }
 
-    insertLink(link, target='', rel='') {
+    insertLink(link, target = '', rel = '') {
         let anchorTag = this.selection.findParentTag('A');
         if (anchorTag) {
             this.selection.expandToTag(anchorTag);
-        }else{
+        } else {
             document.execCommand(this.commandLink, false, link);
             anchorTag = this.selection.findParentTag('A');
         }
-        if(anchorTag) {
-            if(!!target) {
+        if (anchorTag) {
+            if (!!target) {
                 anchorTag['target'] = target;
-            }else{
+            } else {
                 anchorTag.removeAttribute('target');
             }
-            if(!!rel) {
+            if (!!rel) {
                 anchorTag['rel'] = rel;
-            }else{
+            } else {
                 anchorTag.removeAttribute('rel');
             }
         }
@@ -346,7 +346,7 @@ export default class Hyperlink {
         return icon;
     }
 
-    addOption(element, text, value=null) {
+    addOption(element, text, value = null) {
         let option = document.createElement('option');
         option.text = text;
         option.value = value;

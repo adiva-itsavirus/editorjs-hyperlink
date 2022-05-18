@@ -19,11 +19,11 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/trinhtam/editorjs-hyperlink.git"
+    "url": "git+https://github.com/adiva-itsavirus/editorjs-hyperlink.git"
   },
-  "homepage": "https://github.com/trinhtam/editorjs-hyperlink",
+  "homepage": "https://github.com/adiva-itsavirus/editorjs-hyperlink.git",
   "bugs": {
-    "url": "https://github.com/trinhtam/editorjs-hyperlink/issues"
+    "url": "https://github.com/adiva-itsavirus/editorjs-hyperlink.git"
   },
   "devDependencies": {
     "@babel/core": "^7.10.2",

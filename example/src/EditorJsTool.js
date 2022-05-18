@@ -18,7 +18,7 @@ export const EDITOR_JS_TOOLS: { [toolName: string]: ToolConstructable | ToolSett
             rel: 'nofollow', // default null
             availableTargets: ['_blank', '_self'],
             availableRels: ['author', 'noreferrer'],
-            validate: false
+            validate: true
         },
     },
 };
